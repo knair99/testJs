@@ -1,0 +1,85 @@
+body{
+    background-image: url("http://www.lawsonproducts.com/images/lawson/images/background.jpg");
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    color: darkorange;
+    text-align: center;
+    font-family: Calibri;
+}
+
+.quiz_start p{
+    display: block;
+    text-align: center;
+    font-family: Calibri;
+    font-size: xx-large;
+}
+
+.quiz_start {
+    display: block;
+    text-align: center;
+    font-family: Calibri;
+    font-size: large;
+}
+
+.quiz_button {
+    background-color:#44c767;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+
+.quiz_button:hover{
+    background-color:#5cbf2a;
+}
+
+.quiz_button:active {
+    position:relative;
+    top:1px;
+}
+
+.quiz_q_and_a{
+    display: none;
+}
+
+.main{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.questions{
+    position:relative;
+    top: 10px;
+    text-align: start;
+    color: darkorange;
+}
+
+.answers{
+    position:relative;
+    top: 10px;
+    text-align: start;
+    color: steelblue;
+}
+
+.results{
+    position:relative;
+    top: 10px;
+    text-align: start;
+    color: steelblue;
+    display: none;
+    font-size: xx-large;
+}
