@@ -34,10 +34,12 @@ $(document).ready(function()
     nav_button.on('click', function() {
         //Don't need the title any more
         $(".main").find("h1").css("display", "none");
+
         //Reset choices
         for(j=1; j <= 4; j++) {
             $("#choice" + j).prop('checked', false);
         }
+
         //Terminate & Display final score
         if(index > 3){
             $('.quiz_start').css("display", "none");
@@ -47,17 +49,21 @@ $(document).ready(function()
 
         //hide the button
         $(this).css("display", "none");
+
         //start by displaying the block of Q&A
         $(".quiz_q_and_a").css("display", "block");
+
         //set the questions
         var question = quizQuestions[index].question;
         $(".questions").text(question);
+
         //fill in answers
         for(var i=0; i < 4; i++){
             var answer = quizQuestions[index].choices[i];
             var j = i + 1;
             $("label[for=choice" + j + "]").text(answer);
         }
+
         //Set stage for next question
         $(this).css("display", "block");
         $(this).text("Next Question!");
