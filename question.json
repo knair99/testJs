@@ -1,0 +1,49 @@
+{ "questions":
+[
+  {
+    "question": "How many states does India have?",
+    "choices": [
+    "29",
+    "30",
+    "28",
+    "31"
+    ],
+    "correctAnswer": 0
+  },
+
+  {
+    "question": "How many Lok Sabha constituencies does India have?",
+    "choices": [
+      "29",
+      "543",
+      "275",
+      "250"
+    ],
+    "correctAnswer": 1
+  },
+
+
+  {
+    "question": "Who is the current President of India?",
+    "choices": [
+      "Narendra Modi",
+      "Rajnath Singh",
+      "Hamid Ansari",
+      "Pranab Mukherjee"
+    ],
+    "correctAnswer": 3
+  },
+
+  {
+    "question": "What is India's national language?",
+    "choices": [
+      "English",
+      "Sanskrit",
+      "Hindi",
+      "None of the above"
+    ],
+    "correctAnswer": 3
+  }
+
+]
+}

@@ -2,30 +2,38 @@
  * Created by kprasad on 2/5/16.
  */
 
-var quizQuestions = [
-    {question: "How many states does India have?",
-        choices: ["29", "30", "28", "31"],
-        correctAnswer:0},
+var quizQuestions = null;
 
-    {question: "How many Lok Sabha constituencies does India have?",
-        choices: ["29", "543", "275", "250"],
-        correctAnswer:1},
+function loadJSON(callback) {
 
-    {question: "Who is the current President of India?",
-        choices: ["Narendra Modi", "Rajnath Singh", "Hamid Ansari", "Pranab Mukherjee"],
-        correctAnswer:3},
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'question.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
 
-    {question: "What is India's national language?",
-        choices: ["English", "Sanskrit", "Hindi", "None of the above"],
-        correctAnswer:3}
-
-];
 
 var index = 0;
 var score = 0;
 
+
+
 $(document).ready(function()
 {
+
+    if(quizQuestions === null){
+        loadJSON(function(response){
+           var all_questions  = JSON.parse(response);
+           quizQuestions = all_questions.questions;
+        });
+    }
+
     var nav_button;
     nav_button = $(this).find(".quiz_button");
     nav_button.css("display", "block");
