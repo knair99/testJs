@@ -3,43 +3,47 @@
  */
 
 var quizQuestions = null;
+var index = 0;
+var score = 0;
 
+//Function to load JSON file
+//Use AJAX for local query
 function loadJSON(callback) {
-
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'question.json', true); // Replace 'my_data' with the path to your file
+    xobj.open('GET', 'question.json', true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
     };
     xobj.send(null);
 }
-
-
-var index = 0;
-var score = 0;
-
-
-
+//When document is ready use AJAX callback
 $(document).ready(function()
 {
-
+    //Load questions from JSON file into quizQuestions
     if(quizQuestions === null){
+        //this is the callback
         loadJSON(function(response){
-           var all_questions  = JSON.parse(response);
-           quizQuestions = all_questions.questions;
+           var all  = JSON.parse(response);
+           quizQuestions = all.questions;
         });
     }
 
+    //Setup page
     var nav_button;
     nav_button = $(this).find(".quiz_button");
     nav_button.css("display", "block");
 
+    var nav_back_button;
+    nav_back_button = $(this).find(".quiz_back_button");
+    nav_back_button.css("display", "block");
+
+
     //Event handler for navigation button
     nav_button.on('click', function() {
+
         //Don't need the title any more
         $(".main").find("h1").css("display", "none");
 
@@ -74,7 +78,32 @@ $(document).ready(function()
 
         //Set stage for next question
         $(this).css("display", "block");
-        $(this).text("Next Question!");
+        $(this).text("Next");
+
+        //Increment index to next question
+        index = index + 1;
+
+    });
+
+    //Event handler for back button
+    nav_back_button.on('click', function() {
+
+        //Start by decrementing index to previous question
+        index = index - 1;
+
+        //Display the block of Q&A
+        $(".quiz_q_and_a").css("display", "block");
+
+        //set the questions
+        var question = quizQuestions[index].question;
+        $(".questions").text(question);
+
+        //fill in answers
+        for(var i=0; i < 4; i++){
+            var answer = quizQuestions[index].choices[i];
+            var j = i + 1;
+            $("label[for=choice" + j + "]").text(answer);
+        }
 
     });
 
@@ -87,11 +116,9 @@ $(document).ready(function()
         console.log(correct + ' type ' + typeof(correct));
 
         if(ans === correct ){
-            console.log ("yay");
             score = score + 1;
         }
-        //Increment index to next question
-        index = index + 1;
+
     });
 
 });
