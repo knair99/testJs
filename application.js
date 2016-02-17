@@ -3,8 +3,10 @@
  */
 
 var quizQuestions = null;
-var index = 0;
+var index = -1; //For initial nav button value
 var score = 0;
+var answers = [];
+var prev_ans = 0;
 
 //Function to load JSON file
 //Use AJAX for local query
@@ -38,50 +40,54 @@ $(document).ready(function()
 
     var nav_back_button;
     nav_back_button = $(this).find(".quiz_back_button");
-    nav_back_button.css("display", "block");
+    nav_back_button.css("display", "none");
 
 
     //Event handler for navigation button
     nav_button.on('click', function() {
 
+        //Increment index to next question
+        index = index + 1;
+
+        //Display the back button
+        nav_back_button.css("display", "block");
         //Don't need the title any more
         $(".main").find("h1").css("display", "none");
-
-        //Reset choices
-        for(j=1; j <= 4; j++) {
+        //Reset choices on answers input
+        for (j = 0; j < 4; j++) {
             $("#choice" + j).prop('checked', false);
         }
 
-        //Terminate & Display final score
-        if(index > 3){
-            $('.quiz_start').css("display", "none");
-            $('.results').css("display", "block");
-            $('.results').append('<strong> ' + score + ' out of 4 </strong>');
+        //Calculate previous questions score from here
+        if (index > 0) {
+            //Get previous question's answer
+            var correct = quizQuestions[index-1].correctAnswer;
+            if(prev_ans === correct ){
+                score = score + 1;
+                console.log("correct");
+            }
         }
 
-        //hide the button
-        $(this).css("display", "none");
-
+        //Terminate & Display final score
+        if (index > 3) {
+            $('.quiz_start').css("display", "none");
+            $('.results').css("display", "block");
+            $('.results').append('<strong> ' + score  + ' out of 4 </strong>');
+            return;
+        }
         //start by displaying the block of Q&A
         $(".quiz_q_and_a").css("display", "block");
-
         //set the questions
         var question = quizQuestions[index].question;
         $(".questions").text(question);
-
         //fill in answers
-        for(var i=0; i < 4; i++){
+        for (var i = 0; i < 4; i++) {
             var answer = quizQuestions[index].choices[i];
-            var j = i + 1;
-            $("label[for=choice" + j + "]").text(answer);
+            $("label[for=choice" + i + "]").text(answer);
         }
-
         //Set stage for next question
         $(this).css("display", "block");
         $(this).text("Next");
-
-        //Increment index to next question
-        index = index + 1;
 
     });
 
@@ -101,24 +107,14 @@ $(document).ready(function()
         //fill in answers
         for(var i=0; i < 4; i++){
             var answer = quizQuestions[index].choices[i];
-            var j = i + 1;
-            $("label[for=choice" + j + "]").text(answer);
+            $("label[for=choice" + i + "]").text(answer);
         }
 
     });
 
     //Event handler for answer select
     $('.answers').on('change', function(){
-        //Find out answer & grade it
-        var ans = parseInt($('input[name=answer]:checked', '.answers').val());
-        var correct = quizQuestions[index].correctAnswer;
-        console.log(ans + ' type ' + typeof(ans));
-        console.log(correct + ' type ' + typeof(correct));
-
-        if(ans === correct ){
-            score = score + 1;
-        }
-
+         prev_ans = parseInt($('input[name=answer]:checked', '.answers').val());
     });
 
 });
